@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+task makeJar(type:Copy){
+    delete 'build/libs/pcclient.jar'
+    from('build/intermediates/bundles/release/')
+    into('build/libs')
+    include('classes.jar')
+    rename('classes.jar','Sursoft.jar')
+}
+
+makeJar.dependsOn(build)
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
