@@ -152,7 +152,7 @@ public class Adb implements DevicesWatcher{
         @Override
         public void deviceChanged(IDevice device,int changeMask){
             //IDevice.
-            System.out.println("deviceChanged");
+            System.out.println("changeMask deviceChanged:"+changeMask);
         }
 
         @Override
