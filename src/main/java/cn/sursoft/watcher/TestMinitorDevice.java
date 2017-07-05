@@ -19,5 +19,7 @@ public class TestMinitorDevice implements DevicesWatchObserver{
         TestMinitorDevice m = new TestMinitorDevice();
         adb.registerObserver(m);
         adb.startMinitorOnClient();
+        int i = Runtime.getRuntime().availableProcessors();
+        System.out.println(i);
     }
 }

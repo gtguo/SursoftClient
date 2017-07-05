@@ -164,9 +164,10 @@ public class DevicesInformation extends SocketClient{
                     String[] s2 = s1.split("       ");//xxx kb
                     String[] s3 = s2[1].split(" ");
                     //System.out.println(s3[0]); s3[0]:XXXkb
-                    float l = Integer.valueOf(s3[0]) / 1024;
-                    float f = l / 1024;
-                    setRAMInfo(String.valueOf(Math.round(f)) + "GB");
+                    //float l = Integer.valueOf(s3[0]) / 1024;
+                    //float f = l / 1024;
+                    //setRAMInfo(String.valueOf(Math.round(f)) + "GB");
+                    setRAMInfo(s3[0]);
                     System.out.println(TAG+getRAMInfo());
                 }
                 return;
