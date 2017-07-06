@@ -32,7 +32,9 @@ public class MiniCapUtil implements ScreenSubject {
 	private List<AndroidScreenObserver> observers = new ArrayList<AndroidScreenObserver>();
 
 	private Banner banner = new Banner();
-	private static final int PORT = 1717;
+	//private static final int PORT = 1717;
+	private static final int MAXPORT = 1732;
+	private static int CURRENTPORT = 1716;
 	private Socket socket;
 	private IDevice device;
 	private String REMOTE_PATH = "/data/local/tmp";
@@ -83,9 +85,13 @@ public class MiniCapUtil implements ScreenSubject {
 			executeShellCommand(String.format(MINICAP_CHMOD_COMMAND,
 					REMOTE_PATH, MINICAP_BIN));
 			// 端口转发
-			device.createForward(PORT, "minicap",
+			if (CURRENTPORT < MAXPORT) {
+				CURRENTPORT++;
+			}
+			device.createForward(CURRENTPORT, "minicap",
 					DeviceUnixSocketNamespace.ABSTRACT);
-
+			
+			
 			// 获取设备屏幕的尺寸
 			String output = executeShellCommand(MINICAP_WM_SIZE_COMMAND);
 			size = output.split(":")[1].trim();
@@ -257,7 +263,7 @@ public class MiniCapUtil implements ScreenSubject {
 					e.printStackTrace();
 				}
 
-				socket = new Socket("localhost", PORT);
+				socket = new Socket("localhost", CURRENTPORT);
 				stream = socket.getInputStream();
 				// input = new DataInputStream(stream);
 				int len = 4096;
