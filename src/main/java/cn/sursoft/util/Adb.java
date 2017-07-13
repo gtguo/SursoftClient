@@ -65,6 +65,7 @@ public class Adb implements DevicesWatcher{
             getUbuntuAdbPath();
         }
         return adbPath;
+        //return "/Users/xiaobaogang/Library/Android/sdk/platform-tools/adb";
     }
     /**
      * 初始化adb连接
@@ -112,6 +113,10 @@ public class Adb implements DevicesWatcher{
             }
         }
         return devices;
+    }
+
+    public void stopAndroidDebugBridge(){
+        AndroidDebugBridge.disconnectBridge();
     }
 
     public void startMinitorOnClient(){
@@ -205,9 +210,11 @@ public class Adb implements DevicesWatcher{
         }
 
         public void stopDeviceMinitor(){
+            minitor.flag = true;
             minitor.interrupt();
         }
         class DeviceMinitor extends Thread{
+            private boolean flag = false;
             @Override
             public void interrupt(){
                 super.interrupt();
@@ -215,7 +222,7 @@ public class Adb implements DevicesWatcher{
 
             @Override
             public void run(){
-                while (!isInterrupted()){
+                while (!flag){
                     //minitor
                     waitForDevice();
                 }

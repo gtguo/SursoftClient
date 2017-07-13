@@ -21,7 +21,6 @@ public class ParameterAssemble {
     private static final String TAG = "ParameterAssemble ";
     private String userId;
     private String taskName;
-    private GregorianCalendar calendar;
     private IDevice[] devices;
     private String scriptPath;
     private String argsJsonPath;
@@ -30,16 +29,16 @@ public class ParameterAssemble {
     private File fileLog = null;
 
     public ParameterAssemble(String userId,String taskName,
-                             GregorianCalendar calendar,
                              IDevice[] serialId,
                              String argsJsonPath,
                              String scriptPath){
         this.userId = userId;
         this.taskName = taskName;
-        this.calendar = calendar;
         this.devices = serialId;
-        this.scriptPath = downloadTestScriptFile(scriptPath);
-        this.argsJsonPath = downloadTestArgsJsonFile(argsJsonPath);
+        //this.scriptPath = downloadTestScriptFile(scriptPath);
+        //this.argsJsonPath = downloadTestArgsJsonFile(argsJsonPath);
+        this.scriptPath = scriptPath;
+        this.argsJsonPath = argsJsonPath;
         generalTestReportLogFile();
     }
 
@@ -51,7 +50,7 @@ public class ParameterAssemble {
     public IDevice[] getSerialId(){
         return this.devices;
     }
-
+/*****************************************
     private String downloadTestScriptFile(String url){
         String localScriptName = "execScript.py";
         downloadFile(url,localScriptName);
@@ -108,7 +107,7 @@ public class ParameterAssemble {
             e.printStackTrace();
         }
     }
-
+ *******************/
     private void generalTestReportLogFile(){
         String userdir = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
@@ -116,21 +115,13 @@ public class ParameterAssemble {
         fileReport = new File(userdir+separator+"Report"
                     +separator+userId
                     +separator+taskName
-                    +separator+calendar.get(GregorianCalendar.YEAR)
-                    +(calendar.get(GregorianCalendar.MONTH)+1)
-                    +calendar.get(GregorianCalendar.DAY_OF_MONTH)
-                    +calendar.get(GregorianCalendar.HOUR)
-                    +calendar.get(GregorianCalendar.MINUTE));
+                    +separator);
         fileReport.mkdirs();
 
         fileLog = new File(userdir+separator+
                     "Log"+separator
                     +userId+separator+taskName
-                    +separator+calendar.get(GregorianCalendar.YEAR)
-                    +(calendar.get(GregorianCalendar.MONTH)+1)
-                    +calendar.get(GregorianCalendar.DAY_OF_MONTH)
-                    +calendar.get(GregorianCalendar.HOUR)
-                    +calendar.get(GregorianCalendar.MINUTE));
+                    +separator);
         fileLog.mkdirs();
         System.out.println(TAG+"generalTestReportLogFile");
     }

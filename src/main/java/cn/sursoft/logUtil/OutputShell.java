@@ -7,5 +7,5 @@ import java.io.OutputStream;
  */
 
 public interface OutputShell {
-    public void getOutputShellLog(OutputStream outputStream);
+    public void getOutputShellLog(String out);
 }

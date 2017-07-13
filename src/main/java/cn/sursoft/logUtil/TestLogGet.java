@@ -11,5 +11,5 @@ public interface TestLogGet {
 
     public void removeObserver(OutputShell o);
 
-    public void notifyObservers(OutputStream outputStream);
+    public void notifyObservers(String outputStream);
 }

@@ -43,7 +43,7 @@ public class MonkeyTestOutShell implements TestLogGet {
         }
     }
 
-    public void notifyObservers(OutputStream outputStream){
+    public void notifyObservers(String outputStream){
         for (OutputShell observer : observers) {
             observer.getOutputShellLog(outputStream);
         }

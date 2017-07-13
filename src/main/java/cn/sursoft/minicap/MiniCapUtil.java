@@ -79,9 +79,9 @@ public class MiniCapUtil implements ScreenSubject {
 		try {
 			// 将minicap的可执行文件和.so文件一起push到设备中
 			device.pushFile(minicapBinFile.getAbsolutePath(), REMOTE_PATH
-					+ File.separator + MINICAP_BIN);
+					 +"/"+ MINICAP_BIN);
 			device.pushFile(minicapSoFile.getAbsolutePath(), REMOTE_PATH
-					+ File.separator + MINICAP_SO);
+					 +"/"+ MINICAP_SO);
 			executeShellCommand(String.format(MINICAP_CHMOD_COMMAND,
 					REMOTE_PATH, MINICAP_BIN));
 			// 端口转发
