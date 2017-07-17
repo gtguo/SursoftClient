@@ -82,6 +82,10 @@ public class MiniCapUtil implements ScreenSubject {
 					 +"/"+ MINICAP_BIN);
 			device.pushFile(minicapSoFile.getAbsolutePath(), REMOTE_PATH
 					 +"/"+ MINICAP_SO);
+			System.out.println(minicapBinFile.getAbsolutePath());
+			System.out.println(REMOTE_PATH+"/"+ MINICAP_BIN);
+			System.out.println(minicapSoFile.getAbsolutePath());
+			System.out.println(REMOTE_PATH+"/"+ MINICAP_SO);
 			executeShellCommand(String.format(MINICAP_CHMOD_COMMAND,
 					REMOTE_PATH, MINICAP_BIN));
 			// 端口转发

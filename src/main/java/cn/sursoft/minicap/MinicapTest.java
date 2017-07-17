@@ -2,6 +2,9 @@ package cn.sursoft.minicap;
 
 /**
  * Created by gtguo on 7/13/2017.
+ * 为了演示手机屏幕信息映射到电脑
+ * 使用awt做显示画面
+ * 核心实现见MyPanel
  */
 
 import java.awt.Dimension;
@@ -63,14 +66,14 @@ public class MinicapTest extends JFrame {
     }
 
     class MyPanel extends JPanel implements AndroidScreenObserver {
-
+        //核心实现AndroidScreenObserver接口。重写frameImageChange方法
         BufferedImage image = null;
         MiniCapUtil minicap = null;
 
         public MyPanel(IDevice device,MinicapTest frame) {
             minicap = new MiniCapUtil(device);
-            minicap.registerObserver(this);
-            minicap.startScreenListener();
+            minicap.registerObserver(this);//注册到监听列表
+            minicap.startScreenListener();//开始监听
 
         }
 
@@ -111,6 +114,7 @@ public class MinicapTest extends JFrame {
         }
         @Override
         public void frameImageChange(byte[] image) {
+            //获取image二进制数据来处理转换
             this.image = createImageFromByte(image);
             //this.image = (BufferedImage) b;
             int w = this.image.getWidth();
