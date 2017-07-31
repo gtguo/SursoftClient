@@ -1,7 +1,5 @@
 package cn.sursoft.CommandFactory;
 
-import com.android.ddmlib.IDevice;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -11,20 +9,17 @@ import java.io.InputStreamReader;
  * Created by gtguo on 7/14/2017.
  */
 
-public abstract class PythonScriptExecAPI implements TestScriptHandler,TestStatusObserver {
-    private IDevice iDevice = null;
-    private String scriptFilePath = null;
-    private String parameterJsonFilePath = null;
+public abstract class PythonScriptExecAPI extends ParameterAssemble implements TestScriptHandler {
 
-    public PythonScriptExecAPI(IDevice iDevice,String scriptFilePath,String parameterJsonFilePath){
-        this.iDevice = iDevice;
-        this.scriptFilePath = scriptFilePath;
-        this.parameterJsonFilePath = parameterJsonFilePath;
+    public PythonScriptExecAPI(String userId,String taskName,
+                               String[] serialId,
+                               String argsJson,//Json args
+                               String scriptPath){
+        super(userId,taskName,serialId,argsJson,scriptPath);
     }
     @Override
-    public void execTestCmd(){
-        ProcessBuilder pb = new ProcessBuilder("python", scriptFilePath,
-                        "--Device",iDevice.getSerialNumber(),"--Path",parameterJsonFilePath);
+    public void execTestCmd(String cmd){
+        ProcessBuilder pb = new ProcessBuilder(cmd, getScriptPath(),getArgsJson());
         //pb.directory(new File(SHELL_FILE_DIR));
         System.out.println(pb.command());
         int runningStatus = 0;
@@ -54,9 +49,7 @@ public abstract class PythonScriptExecAPI implements TestScriptHandler,TestStatu
         }
     }
     @Override
-    public File getTestReport(){return null;}
+    public File getTestReport(){return getFileReport();}
     @Override
-    public File getTestLog(){return null;}
-    @Override
-    public void TestStatusChanged(String status){}
+    public File getTestLog(){return getFileLog();}
 }

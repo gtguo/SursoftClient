@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
-
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
 
@@ -19,15 +17,19 @@ public class Adb implements DevicesWatcher{
     private String adbPath = null;
     private String adbPlatformTools = "platform-tools";
     public static boolean hasInitAdb = false;
-    private HashMap<String, DevicesInformation> devInfo = null;
+
     private ArrayList<IDevice> devicelist = null;
     private NewDeviceListener listener = null;
     private List<DevicesWatchObserver> observers = new ArrayList<DevicesWatchObserver>();
+    private SingletonMinitorIDevice singletonMinitorIDevice = null;
 
     public Adb(){
         devicelist = new ArrayList<>();
         listener = new NewDeviceListener();
         init();
+        singletonMinitorIDevice = SingletonMinitorIDevice.getInstance();
+        this.registerObserver(singletonMinitorIDevice);
+        this.startMinitorOnClient();
        // getDevices();
     }
 
@@ -110,10 +112,14 @@ public class Adb implements DevicesWatcher{
             devices = mAndroidDebugBridge.getDevices();
             for(int i=0;i<devices.length;i++){
                 devicelist.add(devices[i]);
+                singletonMinitorIDevice.getDevInfo().put(devices[i].getSerialNumber(),devices[i]);
+                //devInfo.put(devices[i].getSerialNumber(),devices[i]);
             }
         }
         return devices;
     }
+
+
 
     public void stopAndroidDebugBridge(){
         AndroidDebugBridge.disconnectBridge();

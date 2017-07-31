@@ -10,11 +10,14 @@ import cn.sursoft.util.Adb;
  */
 
 public class TestPythonScriptExecAPI extends PythonScriptExecAPI {
-    public TestPythonScriptExecAPI(IDevice iDevice, String scriptFilePath, String parameterJsonFilePath){
-        super(iDevice, scriptFilePath, parameterJsonFilePath);
+    public TestPythonScriptExecAPI(String userId,String taskName, String[] serialId,
+                               String argsJson,//Json args
+                               String scriptPath){
+        super(userId,taskName,serialId,argsJson,scriptPath);
     }
-
     public static void main(String[] args){
+
+        /********************
         Adb adb = new Adb();
         IDevice[] devices = adb.getDevices();
         TestPythonScriptExecAPI t = null;
@@ -23,6 +26,7 @@ public class TestPythonScriptExecAPI extends PythonScriptExecAPI {
                     "E:\\java\\SursoftClient\\GMonkey3\\GMonekey.py",
                     "E:\\java\\SursoftClient\\GMonkey3\\Monkey.json");
         }
-        t.execTestCmd();
+        t.execTestCmd("python");
+         *****************/
     }
 }

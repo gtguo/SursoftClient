@@ -13,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.GregorianCalendar;
 
+import cn.sursoft.util.SingletonMinitorIDevice;
+
 /**
  * Created by gtguo on 5/16/2017.
  */
@@ -23,32 +25,60 @@ public class ParameterAssemble {
     private String taskName;
     private IDevice[] devices;
     private String scriptPath;
-    private String argsJsonPath;
-
+    private String argsJson;
     private File fileReport = null;
     private File fileLog = null;
+    private String[] serialNumbers;
 
     public ParameterAssemble(String userId,String taskName,
-                             IDevice[] serialId,
-                             String argsJsonPath,
+                             String[] serialId,
+                             String argsJson,//Json args
                              String scriptPath){
         this.userId = userId;
         this.taskName = taskName;
-        this.devices = serialId;
+        //this.devices = serialId;
         //this.scriptPath = downloadTestScriptFile(scriptPath);
         //this.argsJsonPath = downloadTestArgsJsonFile(argsJsonPath);
+        setDevices(serialId);
         this.scriptPath = scriptPath;
-        this.argsJsonPath = argsJsonPath;
+        this.argsJson = argsJson;
         generalTestReportLogFile();
     }
 
+    private void setDevices(String[] serialId){
+        if(serialId.length>0){
+            this.devices = new IDevice[serialId.length];
+            for (int i =0;i<serialId.length;i++) {
+                devices[i]=SingletonMinitorIDevice.getInstance().getIDeviceBySerialNum(serialId[i]);
+            }
+        }
+    }
     public String getScriptPath(){
         return this.scriptPath;
     }
-    public File getFileReport(){return this.fileReport;}
-    public File getFileLog(){return this.fileLog;}
-    public IDevice[] getSerialId(){
+
+    public String getArgsJson(){
+        return this.argsJson;
+    }
+
+    public IDevice[] getDevices(){
         return this.devices;
+    }
+
+    public String getUserId(){
+        return this.userId;
+    }
+
+    public String getTaskName(){
+        return this.taskName;
+    }
+
+    public File getFileReport(){
+        return this.fileReport;
+    }
+
+    public File getFileLog(){
+        return this.fileLog;
     }
 /*****************************************
     private String downloadTestScriptFile(String url){
