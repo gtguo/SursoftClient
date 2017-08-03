@@ -22,7 +22,7 @@ public class TestAdbCmdDebug implements OutputShell {
         TestAdbCmdDebug t = new TestAdbCmdDebug();
         AdbCmdDebugInfoStream adbCmd = null;
         if(devices.length>0){
-            adbCmd = new AdbCmdDebugInfoStream(devices[0],"E:\\java\\SursoftClient\\Log");
+            //adbCmd = new AdbCmdDebugInfoStream(devices[0],"E:\\java\\SursoftClient\\Log");
         }
         adbCmd.registerObserver(t);
         adbCmd.execAdbCmd("logcat");

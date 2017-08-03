@@ -14,7 +14,7 @@ public class TestLogcatGeneralFile {
         IDevice[] devices = adb.getDevices();
         AdbCmdDebugInfoStream adbCmd = null;
         if(devices.length>0){
-            adbCmd = new AdbCmdDebugInfoStream(devices[0],"E:\\java\\SursoftClient\\Log");
+           // adbCmd = new AdbCmdDebugInfoStream(devices[0],"E:\\java\\SursoftClient\\Log");
         }
         adbCmd.execAdbCmd("logcat");
         //adbCmd.removeObserver(t);

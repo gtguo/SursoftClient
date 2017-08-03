@@ -1,5 +1,6 @@
 package cn.sursoft.logUtil;
 
+import cn.sursoft.util.SingletonMinitorIDevice;
 import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
@@ -22,10 +23,12 @@ public class AdbCmdDebugInfoStream extends MultiLineReceiver implements TestLogG
     private IDevice iDevice = null;
     private List<OutputShell> observers = new ArrayList<OutputShell>();
     private String saveLogFilePath = null;
+    private String serialNum;
 
-    public AdbCmdDebugInfoStream(IDevice i,String saveLogFilePath){
+    public AdbCmdDebugInfoStream(String serialNum,String saveLogFilePath){
         //this.cmd = cmd;
-        this.iDevice = i;
+        this.serialNum = serialNum;
+        this.iDevice = SingletonMinitorIDevice.getInstance().getIDeviceBySerialNum(serialNum);
         this.saveLogFilePath = saveLogFilePath;
     }
 
