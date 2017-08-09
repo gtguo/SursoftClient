@@ -64,8 +64,12 @@ public class AdbCmdDebugInfoStream extends MultiLineReceiver implements TestLogG
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String path = System.getProperty("user.dir");
+                path += File.separator + "script";
+                path += File.separator + "stopLogcat.py";
+                System.out.print("stopAdbLogcatCmd script:"+path);
                 try {
-                    Runtime.getRuntime().exec("python "+"C:\\stopLogcat.py -d "+getSerialNum());
+                    Runtime.getRuntime().exec("python "+path+" -d "+getSerialNum());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
