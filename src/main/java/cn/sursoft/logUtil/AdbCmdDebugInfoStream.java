@@ -33,31 +33,44 @@ public class AdbCmdDebugInfoStream extends MultiLineReceiver implements TestLogG
     }
 
     public void execAdbCmd(String cmd){
-        try {
-            iDevice.executeShellCommand(cmd,this);
-        } catch (TimeoutException e) {
-            System.out.println("adb cmd TimeoutException!");
-            e.printStackTrace();
-        } catch (AdbCommandRejectedException e) {
-            System.out.println("adb cmd AdbCommandRejectedException!");
-            e.printStackTrace();
-        } catch (ShellCommandUnresponsiveException e) {
-            System.out.println("adb cmd ShellCommandUnresponsiveException!");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("adb cmd IOException!");
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    iDevice.executeShellCommand(cmd,AdbCmdDebugInfoStream.this);
+                } catch (TimeoutException e) {
+                    System.out.println("adb cmd TimeoutException!");
+                    e.printStackTrace();
+                } catch (AdbCommandRejectedException e) {
+                    System.out.println("adb cmd AdbCommandRejectedException!");
+                    e.printStackTrace();
+                } catch (ShellCommandUnresponsiveException e) {
+                    System.out.println("adb cmd ShellCommandUnresponsiveException!");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    System.out.println("adb cmd IOException!");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
+    public String getSerialNum(){
+        return this.serialNum;
+    }
     public void stopAdbLogcatCmd(){
         //停止调试命令，如logcat，等于ctrl+C
-        try{
-            Runtime.getRuntime().exec("python ");
-        }catch (IOException e){
-            System.out.println("stop adb logcat err!");
-            e.printStackTrace();
-        }
+        //stopLogcat.py
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Runtime.getRuntime().exec("python "+"C:\\stopLogcat.py -d "+getSerialNum());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
     @Override
     public void processNewLines(String[] strings) {

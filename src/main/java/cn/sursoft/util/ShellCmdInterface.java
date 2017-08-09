@@ -18,7 +18,7 @@ public abstract class ShellCmdInterface extends MultiLineReceiver {
     public void executeShellCommand(String cmd){
         try {
             iDevice.executeShellCommand(cmd,this,50,SECONDS);
-           // iDevice.executeShellCommand();
+            //iDevice.installRemotePackage();
         } catch (TimeoutException e) {
             e.printStackTrace();
         } catch (AdbCommandRejectedException e) {
@@ -29,5 +29,7 @@ public abstract class ShellCmdInterface extends MultiLineReceiver {
             e.printStackTrace();
         }
     }
-
+    public boolean isCancelled(){
+        return false;
+    }
 }
